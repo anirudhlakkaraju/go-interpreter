@@ -10,10 +10,11 @@ type Lexer struct {
 // Returns Lexer for input string
 func New(input string) *Lexer {
 	l := &Lexer{input: input}
+	l.readChar() // Initialize ch, position and readPosition
 	return l
 }
 
-// Reads input string of Lexer char by char
+// Reads next char of Lexer input string
 func (l *Lexer) readChar() {
 	if l.readPosition >= len(l.input) {
 		l.ch = 0
