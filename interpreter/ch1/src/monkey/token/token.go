@@ -17,6 +17,8 @@ const (
 
 	// Operaters
 	ASSIGN   = "="
+	EQ       = "=="
+	NOT_EQ   = "!="
 	PLUS     = "+"
 	MINUS    = "-"
 	BANG     = "!"
@@ -37,12 +39,22 @@ const (
 	// Keywords
 	FUNCTION = "FUNCTION"
 	LET      = "LET"
+	TRUE     = "TRUE"
+	FALSE    = "FALSE"
+	IF       = "IF"
+	ELSE     = "ELSE"
+	RETURN   = "RETURN"
 )
 
 // Map to store language speficic keywords
 var keywords = map[string]TokenType{
-	"fn":  FUNCTION,
-	"let": LET,
+	"fn":     FUNCTION,
+	"let":    LET,
+	"true":   TRUE,
+	"false":  FALSE,
+	"if":     IF,
+	"else":   ELSE,
+	"return": RETURN,
 }
 
 // Returns TokenType given ident string - keyword if present in map else IDENT to indicate user-defined identifier
