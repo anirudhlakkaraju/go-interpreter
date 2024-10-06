@@ -16,6 +16,7 @@ type Expression interface {
 	expressionNode()
 }
 
+// Program is a Node that contains a slice of Statements, which are also Nodes
 type Program struct {
 	Statements []Statement
 }
@@ -28,6 +29,7 @@ func (p *Program) TokenLiteral() string {
 	}
 }
 
+// LetStatement is both a a Node and a Statement
 type LetStatement struct {
 	Token token.Token // the token.LET token
 	Name  *Identifier
@@ -37,6 +39,7 @@ type LetStatement struct {
 func (ls *LetStatement) statementNode()       {}
 func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal }
 
+// Identifier is both a Node and an Expression
 type Identifier struct {
 	Token token.Token // the token.IDENT token
 	Value string
