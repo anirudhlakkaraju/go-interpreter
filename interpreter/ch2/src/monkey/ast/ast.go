@@ -1,5 +1,4 @@
 package ast
-
 import "github.com/anirudhlakkaraju/go-interpreter/interpreter/ch1/src/monkey/token"
 
 type Node interface {
@@ -47,3 +46,11 @@ type Identifier struct {
 
 func (i *Identifier) expressionNode()      {}
 func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
+
+type ReturnStatement struct {
+	Token		token.Token // the `return` token
+	ReturnValue 	Expression
+}
+
+func (rs *ReturnStatement) statementNode()	{}
+func (rs *ReturnStatement) TokenLiteral() string { return rs.Token.Literal }
