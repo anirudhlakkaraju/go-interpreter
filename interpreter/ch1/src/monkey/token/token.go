@@ -2,11 +2,13 @@ package token
 
 type TokenType string
 
+// A Token is made up of a TokenType and a Literal which is the actual value of that token
 type Token struct {
 	Type    TokenType
 	Literal string
 }
 
+// Constant variables to define Keywords and Operaters of Monkey Language
 const (
 	ILLEGAL = "ILLEGAL"
 	EOF     = "EOF"
@@ -27,7 +29,7 @@ const (
 	LT       = "<"
 	GT       = ">"
 
-	// Delimieters
+	// Delimiters
 	COMMA     = ","
 	SEMICOLON = ";"
 
@@ -46,7 +48,7 @@ const (
 	RETURN   = "RETURN"
 )
 
-// Map to store language speficic keywords
+// Map to store language specific keywords
 var keywords = map[string]TokenType{
 	"fn":     FUNCTION,
 	"let":    LET,
