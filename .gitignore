@@ -28,3 +28,13 @@ go.work.sum
 
 # book solution
 waiig_code_1.3/
+
+# Vim swap files
+*.swp
+*.swo
+*.swn
+~*
+
+# Vim session files
+Session.vim
+.netrwhist
