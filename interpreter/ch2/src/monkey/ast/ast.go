@@ -6,16 +6,19 @@ import (
 	"github.com/anirudhlakkaraju/go-interpreter/interpreter/ch1/src/monkey/token"
 )
 
+// Everything is a Node in the Abstract Syntax Tree
 type Node interface {
 	TokenLiteral() string
 	String() string
 }
 
+// Statement Nodes
 type Statement interface {
 	Node
 	statementNode()
 }
 
+// Expression Nodes
 type Expression interface {
 	Node
 	expressionNode()
@@ -106,8 +109,7 @@ func (rs *ReturnStatement) String() string {
 	return out.String()
 }
 
-// Expression Statement is both a Node and Statement
-// ast.Expression can be added to the Statements slice of ast.Program
+// Expression Statement is both a Node and Statement, ast.Expression can be added to the Statements slice of ast.Program
 type ExpressionStatement struct {
 	Token      token.Token // the first token of the expression
 	Expression Expression

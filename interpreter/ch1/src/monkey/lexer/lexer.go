@@ -2,6 +2,7 @@ package lexer
 
 import "github.com/anirudhlakkaraju/go-interpreter/interpreter/ch1/src/monkey/token"
 
+// Lexer is synonymous with Tokenizer. Given a string input it reads the tokens.
 type Lexer struct {
 	input        string
 	position     int  // current position in input (points to current char)
@@ -9,14 +10,14 @@ type Lexer struct {
 	ch           byte // current char under examination
 }
 
-// Returns Lexer for input string
+// Returns Lexer for input string. This Lexer can read the input string's tokens
 func New(input string) *Lexer {
 	l := &Lexer{input: input}
 	l.readChar() // Initialize ch, position and readPosition
 	return l
 }
 
-// Reads next char of Lexer input string
+// Reads next char of input string
 func (l *Lexer) readChar() {
 	if l.readPosition >= len(l.input) {
 		l.ch = 0
