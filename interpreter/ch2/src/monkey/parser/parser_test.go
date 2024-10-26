@@ -25,7 +25,7 @@ func TestLetStatements(t *testing.T) {
 		t.Fatalf("program.Statements does not contain 1 statement. got=%d", len(program.Statements))
 	}
 
-	stmt, ok := program.Statemens[0].(*ast.ExpressionStatement)
+	stmt, ok := program.Statements[0].(*ast.ExpressionStatement)
 	if !ok {
 		t.Fatalf("program.Statements[0] is not an ast.ExpressionStatement. got=%T", program.Statements[0])
 	}

@@ -8,8 +8,10 @@ import (
 	"github.com/anirudhlakkaraju/go-interpreter/interpreter/ch2/src/monkey/ast"
 )
 
+// This is to set precedence for the operators
+// An integer, starting from 0, is incrementally assigned to all the constants
 const (
-	_int = iota
+	_ int = iota
 	LOWEST
 	EQUALS      // ==
 	LESSGREATER // > or <
@@ -32,6 +34,7 @@ type Parser struct {
 	peekToken token.Token
 	errors    []string
 
+	// Based on the curToken, we can select the right prefix/infix parsing function
 	prefixParseFns map[token.TokenType]prefixParseFn
 	infixParseFns  map[token.TokenType]infixParseFn
 }
@@ -47,7 +50,14 @@ func New(l *lexer.Lexer) *Parser {
 	p.nextToken()
 	p.nextToken()
 
+	p.prefixParseFns = make(map[token.TokenType]prefixParseFn)
+	p.registerPrefix(token.IDENT, p.parseIdentifier)
+
 	return p
+}
+
+func (p *Parser) parseIdentifier() ast.Expression {
+	return &ast.Identifier{Token: p.curToken, Value: p.curToken.Literal}
 }
 
 func (p *Parser) Errors() []string {
@@ -148,12 +158,25 @@ func (p *Parser) parseReturnStatement() *ast.ReturnStatement {
 	return stmt
 }
 
+// Add the prefix function for the given tokenTupe to Parser map
 func (p *Parser) registerPrefix(tokenType token.TokenType, fn prefixParseFn) {
 	p.prefixParseFns[tokenType] = fn
 }
 
+// Add the infix function for the given tokenType to Parser map
 func (p *Parser) registerInfix(tokenType token.TokenType, fn infixParseFn) {
 	p.infixParseFns[tokenType] = fn
+}
+
+func (p *Parser) parseExpression(precedence int) ast.Expression {
+	prefix := p.prefixParseFns[p.curToken.Type]
+	if prefix == nil {
+		return nil
+	}
+
+	leftExp := prefix()
+
+	return leftExp
 }
 
 func (p *Parser) parseExpressionStatement() *ast.ExpressionStatement {
