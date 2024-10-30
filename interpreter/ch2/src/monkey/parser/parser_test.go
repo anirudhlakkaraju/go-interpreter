@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/anirudhlakkaraju/go-interpreter/interpreter/ch1/src/monkey/lexer"
@@ -215,19 +216,20 @@ func TestParsingPrefixExpressions(t *testing.T) {
 	}
 }
 
-func testIntegerLiteral(t *testing.T, it ast.Expression, value int64) bool {
+func testIntegerLiteral(t *testing.T, il ast.Expression, value int64) bool {
 	integ, ok := il.(*ast.IntegerLiteral)
+	fmt.Printf("integ type: %T", integ)
 	if !ok {
 		t.Errorf("il not *ast.IntegerLiteral. got=%T", il)
 		return false
 	}
 
-	integ.Value != value {
+	if integ.Value != value {
 		t.Errorf("integ.Value not %d. got=%d", value, integ.Value)
-		return false;
+		return false
 	}
 
-	if integ.TokenLIteral() != fmt.Sprintf("%d", value) {
+	if integ.TokenLiteral() != fmt.Sprintf("%d", value) {
 		t.Errorf("integ.TokenLiteral not %d. got=%s", value, integ.TokenLiteral())
 		return false
 	}
