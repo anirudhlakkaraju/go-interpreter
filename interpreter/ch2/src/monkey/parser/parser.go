@@ -213,6 +213,9 @@ func (p *Parser) noPrefixParseFnError(t token.TokenType) {
 // Parameters:
 //   - precedence: The precedence level to consider when parsing the expression.
 func (p *Parser) parseExpression(precedence int) ast.Expression {
+	// Uncomment to help with visibility when running tests
+	// defer untrace(trace("parseExpression"))
+
 	prefix := p.prefixParseFns[p.curToken.Type]
 	if prefix == nil {
 		p.noPrefixParseFnError(p.curToken.Type)
@@ -237,6 +240,9 @@ func (p *Parser) parseExpression(precedence int) ast.Expression {
 
 // parseExpressionStatement parses and returns an AST ExpressionStatement node starting from the LOWEST precedence
 func (p *Parser) parseExpressionStatement() *ast.ExpressionStatement {
+	// Uncomment to help with visibility when running tests
+	// defer untrace(trace("parseExpressionStatement"))
+
 	stmt := &ast.ExpressionStatement{Token: p.curToken}
 
 	stmt.Expression = p.parseExpression(LOWEST)
@@ -250,6 +256,9 @@ func (p *Parser) parseExpressionStatement() *ast.ExpressionStatement {
 
 // parseIntegerLiteral parses and returns an AST Expression node
 func (p *Parser) parseIntegerLiteral() ast.Expression {
+	// Uncomment to help with visibility when running tests
+	// defer untrace(trace("parseIntegerLiteral"))
+
 	lit := &ast.IntegerLiteral{Token: p.curToken}
 
 	value, err := strconv.ParseInt(p.curToken.Literal, 0, 64)
@@ -267,6 +276,9 @@ func (p *Parser) parseIntegerLiteral() ast.Expression {
 // parsePrefixExpression parses and returns an AST PrefixExpression node.
 // Eg: !5; -f(a, b); !flag(x);
 func (p *Parser) parsePrefixExpression() ast.Expression {
+	// To help with visibility when running tests
+	// defer untrace(trace("parsePrefixExpression"))
+
 	expression := &ast.PrefixExpression{
 		Token:    p.curToken,
 		Operator: p.curToken.Literal,
@@ -298,6 +310,9 @@ func (p *Parser) curPrecendence() int {
 // parseInfixExpression parses and returns an AST InfixExpression node.
 // Eg: a + b; f(a, b) + 5; f(a, b) == 4;
 func (p *Parser) parseInfixExpression(left ast.Expression) ast.Expression {
+	// To help with visibility when running tests
+	// defer untrace(trace("parseInfixExpression"))
+
 	expression := &ast.InfixExpression{
 		Token:    p.curToken,
 		Left:     left,
