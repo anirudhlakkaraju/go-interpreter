@@ -23,7 +23,3 @@ Feel free to check out the code as I develop this interpreter. Contriutions are 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-Let me know if you'd like any further adjustments!
