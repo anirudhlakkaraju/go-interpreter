@@ -180,7 +180,7 @@ func (p *Parser) expectPeek(t token.TokenType) bool {
 
 // peekError appends an error to Parser's errors slice when peekToken type does not match expected input token type t
 func (p *Parser) peekError(t token.TokenType) {
-	msg := fmt.Sprintf("expected next token to be %s. got= %s", t, p.peekToken.Type)
+	msg := fmt.Sprintf("expected next token to be %s. got %s instead", t, p.peekToken.Type)
 	p.errors = append(p.errors, msg)
 }
 
