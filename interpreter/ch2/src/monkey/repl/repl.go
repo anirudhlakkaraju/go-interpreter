@@ -4,8 +4,9 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"monkey/lexer"
-	"monkey/parser"
+
+	"github.com/anirudhlakkaraju/go-interpreter/interpreter/ch2/src/monkey/lexer"
+	"github.com/anirudhlakkaraju/go-interpreter/interpreter/ch2/src/monkey/parser"
 )
 
 const PROMPT = ">> "

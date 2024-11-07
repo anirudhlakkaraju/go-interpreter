@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/anirudhlakkaraju/go-interpreter/interpreter/ch1/src/monkey/lexer"
-	"github.com/anirudhlakkaraju/go-interpreter/interpreter/ch1/src/monkey/token"
 	"github.com/anirudhlakkaraju/go-interpreter/interpreter/ch2/src/monkey/ast"
+	"github.com/anirudhlakkaraju/go-interpreter/interpreter/ch2/src/monkey/lexer"
+	"github.com/anirudhlakkaraju/go-interpreter/interpreter/ch2/src/monkey/token"
 )
 
 // Operator precedences, assigned incrementally using iota

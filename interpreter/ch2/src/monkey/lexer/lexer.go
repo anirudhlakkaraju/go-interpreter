@@ -1,6 +1,6 @@
 package lexer
 
-import "github.com/anirudhlakkaraju/go-interpreter/interpreter/ch1/src/monkey/token"
+import "github.com/anirudhlakkaraju/go-interpreter/interpreter/ch2/src/monkey/token"
 
 // Lexer is synonymous with Tokenizer. Given a string input it reads the tokens.
 type Lexer struct {

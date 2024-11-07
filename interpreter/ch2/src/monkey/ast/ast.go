@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"strings"
 
-	"github.com/anirudhlakkaraju/go-interpreter/interpreter/ch1/src/monkey/token"
+	"github.com/anirudhlakkaraju/go-interpreter/interpreter/ch2/src/monkey/token"
 )
 
 // Everything is a Node in the Abstract Syntax Tree
