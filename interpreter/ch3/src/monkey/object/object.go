@@ -21,16 +21,16 @@ type Integer struct {
 	Value int64
 }
 
-func (i *Integer) Type() string    { return INTEG_OBJ }
-func (i *Integer) Inspect() string { return fmt.Sprintf("%d", i.Value) }
+func (i *Integer) Type() ObjectType { return INTEG_OBJ }
+func (i *Integer) Inspect() string  { return fmt.Sprintf("%d", i.Value) }
 
 // Boolean Object represents a Boolean
 type Boolean struct {
 	Value bool
 }
 
-func (b *Boolean) Type() string    { return BOOLEAN_OBJ }
-func (b *Boolean) Inspect() string { return fmt.Sprintf("%v", b.Value) }
+func (b *Boolean) Type() ObjectType { return BOOLEAN_OBJ }
+func (b *Boolean) Inspect() string  { return fmt.Sprintf("%v", b.Value) }
 
 // Null object
 type Null struct{}
