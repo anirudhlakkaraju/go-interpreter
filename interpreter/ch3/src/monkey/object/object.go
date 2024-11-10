@@ -5,7 +5,7 @@ import "fmt"
 type ObjectType string
 
 const (
-	INTEG_OBJ   = "INTEGER"
+	INTEGER_OBJ = "INTEGER"
 	BOOLEAN_OBJ = "BOOLEAN"
 	NULL_OBJ    = "NULL"
 )
@@ -21,7 +21,7 @@ type Integer struct {
 	Value int64
 }
 
-func (i *Integer) Type() ObjectType { return INTEG_OBJ }
+func (i *Integer) Type() ObjectType { return INTEGER_OBJ }
 func (i *Integer) Inspect() string  { return fmt.Sprintf("%d", i.Value) }
 
 // Boolean Object represents a Boolean
