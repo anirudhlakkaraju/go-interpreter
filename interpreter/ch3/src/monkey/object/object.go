@@ -9,6 +9,7 @@ const (
 	BOOLEAN_OBJ      = "BOOLEAN"
 	NULL_OBJ         = "NULL"
 	RETURN_VALUE_OBJ = "RETURN_VALUE"
+	ERROR_OBJ        = "ERROR"
 )
 
 // Object represents interpreted values
@@ -46,3 +47,11 @@ type ReturnValue struct {
 
 func (rv *ReturnValue) Type() ObjectType { return RETURN_VALUE_OBJ }
 func (rv *ReturnValue) Inspect() string  { return fmt.Sprintf("%v", rv.Value.Inspect()) }
+
+// Error contains the error message
+type Error struct {
+	Message string
+}
+
+func (e *Error) Type() ObjectType { return ERROR_OBJ }
+func (e *Error) Inspect() string  { return fmt.Sprintf("ERROR: %s", e.Message) }
