@@ -18,7 +18,7 @@ Follow the instructions to try and play the interpreter. Check out the Monkey La
 
 ### Lexer
 
-Within the `interpreter/ch1/src/monkey` directory, run:
+Within the `interpreter/lexer/src/monkey` directory, run:
 
 ```bash
 $ go run main.go
@@ -38,7 +38,7 @@ Example:
 
 ### Parser
 
-Within the `interpreter/ch2/src/monkey` directory, run:
+Within the `interpreter/parser/src/monkey` directory, run:
 
 ```bash
 $ go run main.go
