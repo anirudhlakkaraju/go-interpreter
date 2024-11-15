@@ -294,12 +294,15 @@ func isError(obj object.Object) bool {
 
 // evalIdentifier evaluates identifiers
 func evalIdentifier(node *ast.Identifier, env *object.Environment) object.Object {
-	val, ok := env.Get(node.Value)
-	if !ok {
-		return newError("identifier not found: " + node.Value)
+	if val, ok := env.Get(node.Value); ok {
+		return val
 	}
 
-	return val
+	if builtin, ok := builtins[node.Value]; ok {
+		return builtin
+	}
+
+	return newError("identifier not found: " + node.Value)
 }
 
 // evalExpressions evaluates a slice of Expressions nodes into a slice of Objects
@@ -319,16 +322,21 @@ func evalExpressions(exps []ast.Expression, env *object.Environment) []object.Ob
 
 // applyFunction executes the function with the given arguments
 func applyFunction(fn object.Object, args []object.Object) object.Object {
-	function, ok := fn.(*object.Function)
+	switch fn := fn.(type) {
 
-	if !ok {
+	case *object.Function:
+		// execute fn body using the extended env
+		extendedEnv := extendFunctionEnv(fn, args)
+		evaluated := Eval(fn.Body, extendedEnv)
+		return unwrapReturnValue(evaluated)
+
+	case *object.Builtin:
+		// execute the builtin function using the args
+		return fn.Fn(args...)
+
+	default:
 		return newError("not a function: %s", fn.Type())
 	}
-
-	// execute fn body using the extended env
-	extendedEnv := extendFunctionEnv(function, args)
-	evaluated := Eval(function.Body, extendedEnv)
-	return unwrapReturnValue(evaluated)
 }
 
 // extendFunctionEnv returns an env that's extended with the function arguments
