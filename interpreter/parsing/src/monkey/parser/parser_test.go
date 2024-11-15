@@ -637,7 +637,7 @@ func TestParsingIndexExpression(t *testing.T) {
 		t.Fatalf("exp not *ast.IndexExpression. got=%T", stmt.Expression)
 	}
 
-	if !testIdentifier(t, indexExp.Left, "MyArray") {
+	if !testIdentifier(t, indexExp.Left, "myArray") {
 		return
 	}
 
@@ -668,6 +668,7 @@ func TestArrayLiteral(t *testing.T) {
 	testIntegerLiteral(t, array.Elements[0], 1)
 	testIntegerLiteral(t, array.Elements[0], 1)
 }
+
 func testLetStatement(t *testing.T, s ast.Statement, name string) bool {
 	if s.TokenLiteral() != "let" {
 		t.Errorf("s.TokenLiteral not 'let'. got=%q", s.TokenLiteral())
