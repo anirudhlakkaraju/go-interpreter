@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"strings"
 
 	"github.com/anirudhlakkaraju/go-interpreter/interpreter/evaluation/src/monkey/evaluator"
 	"github.com/anirudhlakkaraju/go-interpreter/interpreter/evaluation/src/monkey/object"
@@ -25,6 +26,17 @@ func Start(in io.Reader, out io.Writer) {
 		}
 
 		line := scanner.Text()
+
+		if line == "exit()" {
+			fmt.Println("Goodbye!")
+			return
+		}
+
+		if line != "" && !strings.HasSuffix(line, ";") {
+			// Add a semicolon if the statement is incomplete
+			line += ";"
+		}
+
 		l := lexer.New(line)
 		p := parser.New(l)
 
