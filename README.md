@@ -22,14 +22,15 @@ Clone the repository -
 $ git clone https://github.com/anirudhlakkaraju/go-interpreter.git
 ```
 
-Follow the instructions to try and play the interpreter. Check out the syntax for [Monkey Language](https://monkeylang.org/)!
-
 Within the `interpreter/evaluation/src/monkey` directory, run:
 
 ```bash
 $ go run main.go
 ```
-This will start the REPL (Read-Evaluate-Print-Loop). Here are some examples: 
+
+This will start the REPL (Read-Evaluate-Print-Loop). Check out the syntax for [Monkey Programming Language](https://monkeylang.org/)! 
+
+Here are some examples of what the interpreter can do -
 
 ```bash
 >> let x = 5;
