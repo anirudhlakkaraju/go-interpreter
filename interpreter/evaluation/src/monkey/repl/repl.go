@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"os"
 	"strings"
 
 	"github.com/anirudhlakkaraju/go-interpreter/interpreter/evaluation/src/monkey/evaluator"
@@ -14,30 +15,44 @@ import (
 
 const PROMPT = ">> "
 
-func Start(in io.Reader, out io.Writer) {
-	scanner := bufio.NewScanner(in)
+const MONKEY_FACE = `            __,__
+   .--.  .-"     "-.  .--.
+  / .. \/  .-. .-.  \/ .. \
+ | |  '|  /   Y   \  |'  | |
+ | \   \  \ 0 | 0 /  /   / |
+  \ '- ,\.-"""""""-./, -' /
+   ''-' /_   ^ ^   _\ '-''
+       |  \._   _./  |
+       \   \ '~' /   /
+        '._ '-=-' _.'
+           '-----'
+`
+
+func REPL(in io.Reader, out io.Writer) {
+	reader := bufio.NewReader(in)
 	env := object.NewEnvironment()
 
 	for {
 		fmt.Printf(PROMPT)
-		scanned := scanner.Scan()
-		if !scanned {
-			return
-		}
 
-		line := scanner.Text()
+		input, err := reader.ReadString('\n')
+		check(err)
 
-		if line == "exit()" {
+		input = strings.TrimRight(input, " \n")
+
+		// Exit REPL
+		if input == "exit()" {
 			fmt.Println("Goodbye!")
-			return
+			os.Exit(0)
 		}
 
-		if line != "" && !strings.HasSuffix(line, ";") {
-			// Add a semicolon if the statement is incomplete
-			line += ";"
+		// Allow multiline input for block statements
+		if len(input) > 0 && input[len(input)-1] == '{' {
+			input, err = acceptUntil(reader, input, "\n\n")
+			check(err)
 		}
 
-		l := lexer.New(line)
+		l := lexer.New(input)
 		p := parser.New(l)
 
 		program := p.ParseProgram()
@@ -54,18 +69,36 @@ func Start(in io.Reader, out io.Writer) {
 	}
 }
 
-const MONKEY_FACE = `            __,__
-   .--.  .-"     "-.  .--.
-  / .. \/  .-. .-.  \/ .. \
- | |  '|  /   Y   \  |'  | |
- | \   \  \ 0 | 0 /  /   / |
-  \ '- ,\.-"""""""-./, -' /
-   ''-' /_   ^ ^   _\ '-''
-       |  \._   _./  |
-       \   \ '~' /   /
-        '._ '-=-' _.'
-           '-----'
-`
+func check(err error) {
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(0)
+	}
+}
+
+func acceptUntil(r *bufio.Reader, start, end string) (string, error) {
+	var buf strings.Builder
+
+	buf.WriteString(start)
+	buf.WriteRune('\n')
+	for {
+		fmt.Print("... ")
+		line, err := r.ReadString('\n')
+		if err != nil {
+			return "", err
+		}
+
+		line = strings.TrimRight(line, " \n")
+		buf.WriteString(line)
+		buf.WriteRune('\n')
+
+		if s := buf.String(); len(s) > len(end) && s[len(s)-len(end):] == end {
+			break
+		}
+	}
+
+	return buf.String(), nil
+}
 
 func printParserErrors(out io.Writer, errors []string) {
 	io.WriteString(out, MONKEY_FACE)
