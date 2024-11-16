@@ -15,7 +15,7 @@ func main() {
 	}
 
 	fmt.Printf("\nHello %s! This is the Monkey Programming Language!\n", user.Username)
-	fmt.Println("Inputs need a semicolon to end; press Ctrl-C to quit. Synatx: https://monkeylang.org")
+	fmt.Println("Feel free to type out commands! Enter `exit()` or CTRL-d (i.e. EOF) to exit.")
 	fmt.Printf("\n")
 
 	repl.Start(os.Stdin, os.Stdout)
