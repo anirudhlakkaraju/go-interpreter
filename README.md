@@ -16,6 +16,12 @@ The interpreter supports `functions`, allowing users to define and invoke them w
 
 ## Try it out! 
 
+Clone the repository - 
+
+```bash
+$ git clone https://github.com/anirudhlakkaraju/go-interpreter.git
+```
+
 Follow the instructions to try and play the interpreter. Check out the syntax for [Monkey Language](https://monkeylang.org/)!
 
 Within the `interpreter/evaluation/src/monkey` directory, run:
@@ -23,10 +29,7 @@ Within the `interpreter/evaluation/src/monkey` directory, run:
 ```bash
 $ go run main.go
 ```
-
-This will start the REPL, which takes the input, parses it and builds an Abstract Syntax Tree (AST), using the Pratt Parsing method. The input is evaluated using the Tree Walking approach.
-
-Here are some examples of what Monkey Language can do: 
+This will start the REPL (Read-Evaluate-Print-Loop). Here are some examples: 
 
 ```bash
 >> let x = 5;
@@ -54,7 +57,8 @@ Here are some examples of what Monkey Language can do:
 ```
 
 > [!NOTE]  
-> Statements in Monkey Language end with a SEMICOLON (`;`). To exit the REPL, enter `exit()` or `CTRL-d` (i.e. `EOF`).
+> Statements in Monkey Language end with a SEMICOLON (`;`).
+> To exit the REPL, enter `exit()` or `CTRL-d` (i.e. `EOF`).
 
 #### Lexer and Parser
 
