@@ -374,23 +374,27 @@ func extendFunctionEnv(fn *object.Function, args []object.Object) *object.Enviro
 	return env
 }
 
+// unwrapReturnValue unwraps the object to be returned
 func unwrapReturnValue(obj object.Object) object.Object {
 	if returnValue, ok := obj.(*object.ReturnValue); ok {
 		return returnValue.Value
 	}
-
 	return obj
 }
 
+// evalIndexExpression returns value for given index
 func evalIndexExpression(left, index object.Object) object.Object {
 	switch {
 	case left.Type() == object.ARRAY_OBJ && index.Type() == object.INTEGER_OBJ:
 		return evalArrayIndexExpression(left, index)
+	case left.Type() == object.HASH_OBJ:
+		return evalHashIndexExpression(left, index)
 	default:
 		return newError("index operator not supported: %s", left.Type())
 	}
 }
 
+// evalArrayIndexExpression evaluates the value at given index
 func evalArrayIndexExpression(array, index object.Object) object.Object {
 	arrayObject := array.(*object.Array)
 	idx := index.(*object.Integer).Value
@@ -403,6 +407,7 @@ func evalArrayIndexExpression(array, index object.Object) object.Object {
 	return arrayObject.Elements[idx]
 }
 
+// evalHashLiteral returns the hash object
 func evalHashLiteral(node *ast.HashLiteral, env *object.Environment) object.Object {
 	pairs := make(map[object.HashKey]object.HashPair)
 
@@ -427,4 +432,21 @@ func evalHashLiteral(node *ast.HashLiteral, env *object.Environment) object.Obje
 	}
 
 	return &object.Hash{Pairs: pairs}
+}
+
+// evalHashIndexExpression returns the value given the key
+func evalHashIndexExpression(hash, index object.Object) object.Object {
+	hashObject := hash.(*object.Hash)
+
+	key, ok := index.(object.Hashable)
+	if !ok {
+		return newError("unusable as hash key: %s", index.Type())
+	}
+
+	pair, ok := hashObject.Pairs[key.HashKey()]
+	if !ok {
+		return NULL
+	}
+
+	return pair.Value
 }
