@@ -3,6 +3,7 @@ package object
 import (
 	"bytes"
 	"fmt"
+	"hash/fnv"
 	"strings"
 
 	"github.com/anirudhlakkaraju/go-interpreter/interpreter/parsing/src/monkey/ast"
@@ -128,4 +129,35 @@ func (ao *Array) Inspect() string {
 	out.WriteString("]")
 
 	return out.String()
+}
+
+// HashKey contains a unique hash value and can be linked to a object.String, object.Boolean, object.Integer
+type HashKey struct {
+	Type  ObjectType
+	Value uint64
+}
+
+// HashKey return a HashKey object based on the Boolean value
+func (b *Boolean) HashKey() HashKey {
+	var value uint64
+
+	if b.Value {
+		value = 1
+	} else {
+		value = 0
+	}
+
+	return HashKey{Type: b.Type(), Value: value}
+}
+
+// HashKey return a HashKey object based on the Integer value
+func (i *Integer) HashKey() HashKey {
+	return HashKey{Type: i.Type(), Value: uint64(i.Value)}
+}
+
+// HashKey return a HashKey object based on the String value
+func (s *String) HashKey() HashKey {
+	h := fnv.New64a()
+	h.Write([]byte(s.Value))
+	return HashKey{Type: s.Type(), Value: h.Sum64()}
 }
