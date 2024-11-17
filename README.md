@@ -12,7 +12,7 @@ The interpreter is built in three steps:
 - **Parsing**: The program is parsed into an Abstract Syntax Tree (AST) using Pratt Parsing approach.
 - **Evaluation**: The program is finally executed by "Walking" the AST.
 
-The interpreter supports `functions`, allowing users to define and invoke them with parameters, with global and local scoping. It also handles `strings` and `arrays` with respective built-in functions - `len`, `first`, `last`, `rest`, `push`.
+The interpreter supports `functions`, allowing users to define and invoke them with parameters, with global and local scoping. It also handles `strings`, `arrays` and `hashes` with respective built-in functions - `len`, `puts`, `first`, `last`, `rest`, `push`.
 
 ## Try it out! 
 
@@ -33,14 +33,6 @@ This will start the REPL (Read-Evaluate-Print-Loop). Check out the syntax for [M
 Here are some examples of what the interpreter can do -
 
 ```bash
->> let x = 5;
->> let y = 10;
->> let result = x * y + 2 - 3;
->> result;
-42
-```
-
-```bash
 >> let sum = fn(x, y) {
 ...     x + y;
 ... };
@@ -55,6 +47,21 @@ Here are some examples of what the interpreter can do -
 >> let b = arr[2];
 >> let c = a + b(1);
 3
+```
+
+```bash
+>> let people = [{"name": "Alice", "age": 24}, {"name": "Anna", "age": 28}];
+>> people[0]["name"];
+Alice
+>> people[1]["age"];
+28
+>> people[1]["age"] + people[0]["age"];
+52
+>> let getName = fn(person) { person["name"]; };
+>> getName(people[0]);
+Alice
+>> getName(people[1]);
+Anna
 ```
 
 > [!NOTE]  
