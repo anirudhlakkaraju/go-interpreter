@@ -22,12 +22,18 @@ const (
 	STRING_OBJ       = "STRING"
 	BUILTIN_OBJ      = "BUILTIN"
 	ARRAY_OBJ        = "ARRAY"
+	HASH_OBJ         = "HASH"
 )
 
 // Object represents interpreted values
 type Object interface {
 	Type() ObjectType
 	Inspect() string
+}
+
+// Hashable represents objects that are usable as a hash
+type Hashable interface {
+	HashKey() HashKey
 }
 
 // Integer Object represents an Integer
@@ -160,4 +166,31 @@ func (s *String) HashKey() HashKey {
 	h := fnv.New64a()
 	h.Write([]byte(s.Value))
 	return HashKey{Type: s.Type(), Value: h.Sum64()}
+}
+
+type HashPair struct {
+	Key   Object // Objects that generated the HashKey
+	Value Object // Objects that the Key maps to
+}
+
+type Hash struct {
+	Pairs map[HashKey]HashPair
+}
+
+func (h *Hash) Type() ObjectType { return HASH_OBJ }
+func (h *Hash) Inspect() string {
+	var out bytes.Buffer
+
+	pairs := []string{}
+	for _, pair := range h.Pairs {
+		key := pair.Key.Inspect()
+		value := pair.Value.Inspect()
+		pairs = append(pairs, key+":"+value)
+	}
+
+	out.WriteString("{")
+	out.WriteString(strings.Join(pairs, ", "))
+	out.WriteString("}")
+
+	return out.String()
 }
