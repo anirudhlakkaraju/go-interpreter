@@ -79,6 +79,7 @@ func New(l *lexer.Lexer) *Parser {
 	p.registerPrefix(token.STRING, p.parseStringLiteral)
 	p.registerPrefix(token.LBRACKET, p.parseArrayLiteral)
 	p.registerPrefix(token.LBRACE, p.parseHashLiteral)
+	p.registerPrefix(token.COMMENT, p.parseCommentLiteral)
 
 	// Initialize infix parsing functions for the corresponding token types
 	p.infixParseFns = make(map[token.TokenType]infixParseFn)
@@ -220,7 +221,7 @@ func (p *Parser) registerInfix(tokenType token.TokenType, fn infixParseFn) {
 
 // noPrefixParseFnError appends an error to the parser when no prefix parse function exists for the given token type
 func (p *Parser) noPrefixParseFnError(t token.TokenType) {
-	msg := fmt.Sprintf("no prefix parse function found for %s found", t)
+	msg := fmt.Sprintf("no prefix parse function found for %s", t)
 	p.errors = append(p.errors, msg)
 }
 
@@ -585,4 +586,9 @@ func (p *Parser) parseHashLiteral() ast.Expression {
 	}
 
 	return hash
+}
+
+// parseCommentLiteral stops the parsing process when a comment is encountered
+func (p *Parser) parseCommentLiteral() ast.Expression {
+	return nil
 }
