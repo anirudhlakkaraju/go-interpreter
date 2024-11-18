@@ -1,6 +1,8 @@
 package lexer
 
-import "github.com/anirudhlakkaraju/go-interpreter/interpreter/lexing/src/monkey/token"
+import (
+	"github.com/anirudhlakkaraju/go-interpreter/interpreter/lexing/src/monkey/token"
+)
 
 // Lexer is synonymous with Tokenizer. Given a string input it reads the tokens.
 type Lexer struct {
@@ -60,7 +62,13 @@ func (l *Lexer) NextToken() token.Token {
 			tok = newToken(token.BANG, l.ch)
 		}
 	case '/':
-		tok = newToken(token.SLASH, l.ch)
+		if l.peekChar() == '/' {
+			l.readChar()
+			tok.Type = token.COMMENT
+			tok.Literal = l.readComment()
+		} else {
+			tok = newToken(token.SLASH, l.ch)
+		}
 	case '*':
 		tok = newToken(token.ASTERISK, l.ch)
 	case '<':
@@ -163,6 +171,18 @@ func (l *Lexer) readString() string {
 		// TODO: Add support for char escaping
 
 		if l.ch == '"' || l.ch == 0 {
+			break
+		}
+	}
+	return l.input[position:l.position]
+}
+
+// readComment returns the comment text
+func (l *Lexer) readComment() string {
+	position := l.position + 1
+	for {
+		l.readChar()
+		if l.ch == '\n' || l.ch == 0 {
 			break
 		}
 	}
