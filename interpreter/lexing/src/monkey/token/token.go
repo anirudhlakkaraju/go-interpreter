@@ -50,7 +50,8 @@ const (
 	ELSE     = "ELSE"
 	RETURN   = "RETURN"
 
-	STRING = "STRING"
+	STRING  = "STRING"
+	COMMENT = "COMMENT"
 )
 
 // Map to store language specific keywords
