@@ -1,8 +1,10 @@
-# Writing an Interpreter in Go
+# An Interpreter for Monkey Lang written in Go
 
-Welcome to my implementation of an interpreter for the [Monkey Programming Language](https://monkeylang.org/) written Go.
+This is an interpreter project for a toy programming language - [Monkey Programming Language](https://monkeylang.org/), that's written in Go.
 
-I have referenced the book *Writing an Interpreter in Go* by Thorsten Ball. Read the [book](https://interpreterbook.com/) - it's incredible!
+The purpose of this project is to understand interpreters, write more Go and learn how to test with Go.
+
+Grateful for Thorston Ball's [book](https://interpreterbook.com/) which I have referenced througout this project.
 
 ## Overview
 
