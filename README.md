@@ -16,6 +16,14 @@ The interpreter is built in three steps:
 
 The interpreter supports `functions`, allowing users to define and invoke them with parameters, with global and local scoping. It also handles `strings`, `arrays` and `hashes` with respective built-in functions - `len`, `puts`, `first`, `last`, `rest`, `push`.
 
+## Code Coverage 
+| Package | Coverage |
+| - | - |
+| Lexer | 97.6% |
+| Parser |77.7% |
+| Evaluator| 87.8%|
+
+
 ## Try it out! 
 
 Clone the repository - 
